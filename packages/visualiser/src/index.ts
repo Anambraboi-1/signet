@@ -157,6 +157,14 @@ export {
   type VizTokenName,
 } from './tokens.ts';
 
+// Text-equivalent diagram outline (E-19, #499)
+export {
+  buildDiagramOutline,
+  collectOutlineEdgeIds,
+  renderOutlineHtml,
+  type OutlineNode,
+} from './outline.ts';
+
 // Error surface, declared events and build provenance panels (E-16)
 export {
   diagramPanels,
