@@ -28,3 +28,19 @@ export * from './json-schema.ts';
 export { CONTRACT_META_SECTION, CONTRACT_ENV_META_SECTION } from './meta.ts';
 export * from './diff.ts';
 export * from './orbital.ts';
+
+// Observed executions (#509): the one shape transaction captures (#417) and
+// sandbox runs (#542) normalise into, and the key cleaning the mutability
+// classifier (#510) reads through.
+export type {
+  FootprintObservation,
+  LedgerKeyKind,
+  LedgerKeyRef,
+  ObservationSource,
+} from './observe/types.ts';
+export {
+  classifyLedgerKey,
+  isOwnStateWrite,
+  normaliseFootprint,
+  type RawFootprint,
+} from './observe/normalise.ts';
