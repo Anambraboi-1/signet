@@ -158,6 +158,33 @@ export {
   type VizTokenName,
 } from './tokens.ts';
 
+// Visual vocabulary: node shapes/prefixes, edge styles and the legend
+// (E-13, #493, design §2.3).
+export {
+  EDGE_KIND_ORDER,
+  EDGE_VOCABULARY,
+  NODE_KIND_ORDER,
+  NODE_VOCABULARY,
+  WRITE_MARK_ORDER,
+  WRITE_MARK_VOCABULARY,
+  edgeVocabulary,
+  nodeShapeSvg,
+  nodeVocabulary,
+  renderLegend,
+  type DashPattern,
+  type DiagramKind,
+  type EdgeKind,
+  type EdgeMarker,
+  type EdgeVocabulary,
+  type LegendOptions,
+  type NodeKind,
+  type NodePrefix,
+  type NodeShape,
+  type NodeVocabulary,
+  type WriteMark,
+  type WriteMarkVocabulary,
+} from './vocabulary.ts';
+
 // Text-equivalent diagram outline (E-19, #499)
 export {
   buildDiagramOutline,
@@ -175,4 +202,3 @@ export {
   type PanelError,
   type PanelEvent,
 } from './panels.ts';
-
