@@ -10,10 +10,21 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/exitcode"
 	"github.com/blockchain-maxis/signet/cli/internal/redact"
 )
 
+// testClient builds a Client over an httptest server URL with default
+// transport options (loopback http is allowed without --insecure).
+func testClient(t *testing.T, baseURL string) *Client {
+	t.Helper()
+	c, err := New(baseURL, api.Options{})
+	if err != nil {
+		t.Fatalf("New: %v", err)
+	}
+	return c
+}
 func TestStart_DeclaresTheDeployKey(t *testing.T) {
 	var got map[string]string
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +35,7 @@ func TestStart_DeclaresTheDeployKey(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	started, err := New(srv.URL).Start(context.Background(), "testnet", "GABC")
+	started, err := testClient(t, srv.URL).Start(context.Background(), "testnet", "GABC")
 	if err != nil {
 		t.Fatalf("Start: %v", err)
 	}
@@ -49,7 +60,7 @@ func TestStart_SendsTheResolvedNetworkName(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	if _, err := New(srv.URL).Start(context.Background(), "testnet", "GABC"); err != nil {
+	if _, err := testClient(t, srv.URL).Start(context.Background(), "testnet", "GABC"); err != nil {
 		t.Fatalf("Start: %v", err)
 	}
 	if got["network"] != "testnet" {
@@ -66,7 +77,7 @@ func TestStart_OmitsPublicKeyWhenUnknown(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	if _, err := New(srv.URL).Start(context.Background(), "testnet", ""); err != nil {
+	if _, err := testClient(t, srv.URL).Start(context.Background(), "testnet", ""); err != nil {
 		t.Fatalf("Start: %v", err)
 	}
 	if _, present := got["publicKey"]; present {
@@ -82,7 +93,7 @@ func TestPoll_SendsTheTokenAsAQueryParameter(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	status, err := New(srv.URL).Poll(context.Background(), "tok/with+chars")
+	status, err := testClient(t, srv.URL).Poll(context.Background(), "tok/with+chars")
 	if err != nil {
 		t.Fatalf("Poll: %v", err)
 	}
@@ -103,7 +114,7 @@ func TestComplete_OmitsHandoffCodeOnTheLoopbackPath(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	if _, err := New(srv.URL).Complete(context.Background(), "p_1", "xdr", ""); err != nil {
+	if _, err := testClient(t, srv.URL).Complete(context.Background(), "p_1", "xdr", ""); err != nil {
 		t.Fatalf("Complete: %v", err)
 	}
 	if _, present := got["handoffCode"]; present {
@@ -118,7 +129,7 @@ func TestDo_SurfacesTheServersOwnMessage(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := New(srv.URL).Complete(context.Background(), "p_1", "xdr", "")
+	_, err := testClient(t, srv.URL).Complete(context.Background(), "p_1", "xdr", "")
 	if err == nil {
 		t.Fatal("expected an error")
 	}
@@ -141,7 +152,7 @@ func TestDo_MapsByCodeNotMessage(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := New(srv.URL).Complete(context.Background(), "p_1", "xdr", "")
+	_, err := testClient(t, srv.URL).Complete(context.Background(), "p_1", "xdr", "")
 	if got, _ := exitcode.CodeFor(err); got != exitcode.AlreadyLinked {
 		t.Fatalf("exit code = %d, want %d (err: %v)", got, exitcode.AlreadyLinked, err)
 	}
@@ -160,7 +171,7 @@ func TestDo_ACodeOutranksTheStatus(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := New(srv.URL).Unlink(context.Background(), "SIGNED")
+	_, err := testClient(t, srv.URL).Unlink(context.Background(), "SIGNED")
 	if !errors.Is(err, exitcode.ErrConfiguration) {
 		t.Fatalf("err = %v, want a configuration error", err)
 	}
@@ -175,7 +186,7 @@ func TestDo_AnUnknownCodeFallsBackToTheStatus(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := New(srv.URL).Start(context.Background(), "testnet", "GABC")
+	_, err := testClient(t, srv.URL).Start(context.Background(), "testnet", "GABC")
 	if !errors.Is(err, exitcode.ErrConfiguration) {
 		t.Fatalf("err = %v, want the 503 fallback", err)
 	}
@@ -192,7 +203,7 @@ func TestDo_RedactsSecretsInServerAndRequestErrors(t *testing.T) {
 		}))
 		defer srv.Close()
 
-		_, err := New(srv.URL).Complete(context.Background(), "p_1", "xdr", "")
+		_, err := testClient(t, srv.URL).Complete(context.Background(), "p_1", "xdr", "")
 		if !errors.Is(err, exitcode.ErrNetwork) {
 			t.Fatalf("err = %v, want ErrNetwork", err)
 		}
@@ -202,9 +213,12 @@ func TestDo_RedactsSecretsInServerAndRequestErrors(t *testing.T) {
 	})
 
 	t.Run("request URL", func(t *testing.T) {
-		_, err := New("://"+seed).WhoAmI(context.Background(), "GABC")
-		if !errors.Is(err, exitcode.ErrNetwork) {
-			t.Fatalf("err = %v, want ErrNetwork", err)
+		// Since #601 the malformed URL is refused at construction (a
+		// configuration problem), and the message must still never carry
+		// the pasted secret.
+		_, err := New("://"+seed, api.Options{})
+		if !errors.Is(err, exitcode.ErrConfiguration) {
+			t.Fatalf("err = %v, want ErrConfiguration", err)
 		}
 		if strings.Contains(err.Error(), seed) || !strings.Contains(err.Error(), redact.Placeholder) {
 			t.Fatalf("request error was not redacted: %v", err)
@@ -221,7 +235,7 @@ func TestUnlink_PostsTheSignedChallengeAndReportsWhatWasRemoved(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	result, err := New(srv.URL).Unlink(context.Background(), "SIGNED")
+	result, err := testClient(t, srv.URL).Unlink(context.Background(), "SIGNED")
 	if err != nil {
 		t.Fatalf("Unlink: %v", err)
 	}
@@ -240,7 +254,7 @@ func TestUnlink_SurfacesARefusal(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := New(srv.URL).Unlink(context.Background(), "SIGNED")
+	_, err := testClient(t, srv.URL).Unlink(context.Background(), "SIGNED")
 	if err == nil {
 		t.Fatal("expected an error")
 	}
@@ -258,7 +272,7 @@ func TestDo_A503IsAConfigurationProblemNotANetworkOne(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := New(srv.URL).Start(context.Background(), "testnet", "GABC")
+	_, err := testClient(t, srv.URL).Start(context.Background(), "testnet", "GABC")
 	if err == nil {
 		t.Fatal("expected an error")
 	}
@@ -281,7 +295,7 @@ func TestWhoAmI_ReportsTheHandleAKeyIsAttributedTo(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	identity, err := New(srv.URL).WhoAmI(context.Background(), "GABC")
+	identity, err := testClient(t, srv.URL).WhoAmI(context.Background(), "GABC")
 	if err != nil {
 		t.Fatalf("WhoAmI: %v", err)
 	}
@@ -299,7 +313,7 @@ func TestWhoAmI_ReportsNotLinked(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	identity, err := New(srv.URL).WhoAmI(context.Background(), "GABC")
+	identity, err := testClient(t, srv.URL).WhoAmI(context.Background(), "GABC")
 	if err != nil {
 		t.Fatalf("WhoAmI: %v", err)
 	}

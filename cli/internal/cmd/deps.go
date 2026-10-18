@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/config"
 	"github.com/blockchain-maxis/signet/cli/internal/exitcode"
 	"github.com/blockchain-maxis/signet/cli/internal/keys"
@@ -24,8 +25,13 @@ type Deps struct {
 	// Config is the resolved configuration for this run: deployment URL and
 	// identity. Set by the root's PersistentPreRunE, never by the caller.
 	Config config.Resolved
-	// NewClient builds the API client for a deployment.
-	NewClient func(baseURL string) *pair.Client
+	// NewClient builds the API client for a deployment. The options carry
+	// the build's User-Agent and the --insecure escape hatch (#601); it can
+	// fail, because a plain-http URL on a remote host is refused.
+	NewClient func(baseURL string, opts api.Options) (*pair.Client, error)
+	// Insecure mirrors the root --insecure flag: permit plain http to a
+	// non-local deployment. Off by default for the obvious reason.
+	Insecure bool
 	// KeysBinary is the `stellar` executable identity resolution and signing
 	// shell out to.
 	KeysBinary string

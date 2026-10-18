@@ -13,15 +13,9 @@ package pair
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
-	"net/http"
 	"net/url"
-	"strings"
-	"time"
 
-	"github.com/blockchain-maxis/signet/cli/internal/exitcode"
-	"github.com/blockchain-maxis/signet/cli/internal/redact"
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/spec"
 )
 
@@ -38,22 +32,33 @@ const (
 	StatusExpired   = spec.PollStatusExpired
 )
 
-// Client calls one Signet deployment's pairing API.
+// Client calls one Signet deployment's pairing API, over the shared
+// internal/api transport (#601): retries with backoff on idempotent calls,
+// Retry-After honoured, a User-Agent operators can filter on, and the
+// https-only guard, all live there rather than here.
 type Client struct {
-	BaseURL string
-	HTTP    *http.Client
+	api *api.Client
 }
 
-// New builds a Client for baseURL with a timeout on each individual request.
-// The overall wait is bounded separately, by Wait — a per-request timeout that
-// also had to cover the developer reading a browser prompt would be useless as
-// both.
-func New(baseURL string) *Client {
-	return &Client{
-		BaseURL: strings.TrimRight(baseURL, "/"),
-		HTTP:    &http.Client{Timeout: 15 * time.Second},
+// New builds a Client for baseURL with the transport defaults. The overall
+// pairing wait is bounded separately, by Wait — a per-request timeout that
+// also had to cover the developer reading a browser prompt would be useless
+// as both.
+func New(baseURL string, opts api.Options) (*Client, error) {
+	transport, err := api.New(baseURL, opts)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{api: transport}, nil
 }
+
+// API exposes the underlying transport, so callers needing endpoints outside
+// the pairing vocabulary (link.FetchChallenge, the coming status/doctor) use
+// the same client rather than growing a second one.
+func (c *Client) API() *api.Client { return c.api }
+
+// BaseURL this client talks to.
+func (c *Client) BaseURL() string { return c.api.BaseURL() }
 
 // Started is what `POST /api/cli/pair/start` hands back.
 type Started = spec.PairStartResponse
@@ -66,7 +71,10 @@ type Started = spec.PairStartResponse
 func (c *Client) Start(ctx context.Context, network, publicKey string) (Started, error) {
 	body := spec.PairStartRequest{Network: network, PublicKey: publicKey}
 	var out Started
-	if err := c.do(ctx, http.MethodPost, "/api/cli/pair/start", body, &out); err != nil {
+	// Not marked idempotent: a retried start could mint a second pairing row
+	// mid-flight, and the first URL the terminal printed would then be the
+	// wrong one to approve.
+	if err := c.api.Post(ctx, "/api/cli/pair/start", body, &out); err != nil {
 		return Started{}, err
 	}
 	return out, nil
@@ -76,7 +84,7 @@ func (c *Client) Start(ctx context.Context, network, publicKey string) (Started,
 func (c *Client) Poll(ctx context.Context, pollToken string) (Status, error) {
 	var out spec.PairStatusResponse
 	path := "/api/cli/pair/status?pollToken=" + url.QueryEscape(pollToken)
-	if err := c.do(ctx, http.MethodGet, path, nil, &out); err != nil {
+	if err := c.api.Get(ctx, path, &out); err != nil {
 		return "", err
 	}
 	return out.Status, nil
@@ -100,7 +108,9 @@ const (
 func (c *Client) Complete(ctx context.Context, state, challengeXDR, handoffCode string) (Completed, error) {
 	body := spec.PairCompleteRequest{State: state, Transaction: challengeXDR, HandoffCode: handoffCode}
 	var out Completed
-	if err := c.do(ctx, http.MethodPost, "/api/cli/pair/complete", body, &out); err != nil {
+	// Never retried: the signed challenge is single-spend on the server, and
+	// a lost response does not mean the server did nothing.
+	if err := c.api.Post(ctx, "/api/cli/pair/complete", body, &out); err != nil {
 		return Completed{}, err
 	}
 	if out.Status == "" {
@@ -120,7 +130,7 @@ type Unlinked = spec.UnlinkResponse
 func (c *Client) Unlink(ctx context.Context, challengeXDR string) (Unlinked, error) {
 	var out Unlinked
 	body := spec.UnlinkRequest{Transaction: challengeXDR}
-	if err := c.do(ctx, http.MethodPost, "/api/cli/unlink", body, &out); err != nil {
+	if err := c.api.Post(ctx, "/api/cli/unlink", body, &out); err != nil {
 		return Unlinked{}, err
 	}
 	return out, nil
@@ -136,75 +146,8 @@ type Identity = spec.WhoamiResponse
 func (c *Client) WhoAmI(ctx context.Context, publicKey string) (Identity, error) {
 	var out Identity
 	path := "/api/cli/whoami?publicKey=" + url.QueryEscape(publicKey)
-	if err := c.do(ctx, http.MethodGet, path, nil, &out); err != nil {
+	if err := c.api.Get(ctx, path, &out); err != nil {
 		return Identity{}, err
 	}
 	return out, nil
-}
-
-// do issues one request and decodes a JSON response into out (which may be
-// nil). A non-2xx response is turned into an error carrying the server's own
-// message where it sent one, since those messages are written to be read by
-// the person at the terminal.
-func (c *Client) do(ctx context.Context, method, path string, body any, out any) error {
-	var reader *strings.Reader
-	if body != nil {
-		encoded, err := json.Marshal(body)
-		if err != nil {
-			return fmt.Errorf("%w: encoding request: %s", exitcode.ErrNetwork, redact.Secrets(err.Error()))
-		}
-		reader = strings.NewReader(string(encoded))
-	}
-
-	var req *http.Request
-	var err error
-	if reader != nil {
-		req, err = http.NewRequestWithContext(ctx, method, c.BaseURL+path, reader)
-	} else {
-		req, err = http.NewRequestWithContext(ctx, method, c.BaseURL+path, nil)
-	}
-	if err != nil {
-		return fmt.Errorf("%w: building request: %s", exitcode.ErrNetwork, redact.Secrets(err.Error()))
-	}
-	if body != nil {
-		req.Header.Set("content-type", "application/json")
-	}
-
-	resp, err := c.HTTP.Do(req)
-	if err != nil {
-		return fmt.Errorf("%w: %s", exitcode.ErrNetwork, redact.Secrets(c.BaseURL+": "+err.Error()))
-	}
-	defer func() { _ = resp.Body.Close() }()
-
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		var problem spec.ErrorBody
-		_ = json.NewDecoder(resp.Body).Decode(&problem)
-
-		// The body's code decides the exit code (internal/spec/errors.go), never
-		// its message: messages are for people and free to change.
-		kind, known := spec.ErrorFor(problem.Code)
-		if !known {
-			// No code, or one this build predates: fall back to the status.
-			// 503 means the deployment cannot do this at all — it has no
-			// database to write a link into (#277). That is the operator's
-			// problem, and reporting it as a network error would send the
-			// developer looking at their own connection.
-			kind = exitcode.ErrNetwork
-			if resp.StatusCode == http.StatusServiceUnavailable {
-				kind = exitcode.ErrConfiguration
-			}
-		}
-		if problem.Error != "" {
-			return fmt.Errorf("%w: %s", kind, redact.Secrets(problem.Error))
-		}
-		return fmt.Errorf("%w: %s returned %s", kind, redact.Secrets(path), resp.Status)
-	}
-
-	if out == nil {
-		return nil
-	}
-	if err := json.NewDecoder(resp.Body).Decode(out); err != nil {
-		return fmt.Errorf("%w: decoding response: %s", exitcode.ErrNetwork, redact.Secrets(err.Error()))
-	}
-	return nil
 }

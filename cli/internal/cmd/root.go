@@ -49,6 +49,8 @@ instance) over its HTTP API.`,
 		fmt.Sprintf("deployment context to use (overrides %s and the config file's current context)", config.EnvContext))
 	root.PersistentFlags().String("source", "",
 		"identity to sign as (remembered in the config file for next time)")
+	root.PersistentFlags().Bool("insecure", false,
+		"allow a plain-http deployment URL on a non-local host (signed challenges travel in cleartext; use only against a deployment you control)")
 	root.PersistentFlags().String("sign-with-key", "",
 		fmt.Sprintf("identity to sign with, for non-interactive use (same value as %s; not remembered)", config.EnvSignWithKey))
 
@@ -101,6 +103,7 @@ instance) over its HTTP API.`,
 		}
 		deps := base
 		deps.Config = resolved
+		deps.Insecure, _ = cmd.Flags().GetBool("insecure")
 		cmd.SetContext(withDeps(config.WithResolved(cmd.Context(), resolved), deps))
 
 		// Deliberately only --source: --sign-with-key and STELLAR_SIGN_WITH_KEY

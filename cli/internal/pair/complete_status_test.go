@@ -14,7 +14,7 @@ func TestComplete_ReportsTheStatusTheServerSent(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	got, err := New(srv.URL).Complete(context.Background(), "p_1", "xdr", "")
+	got, err := testClient(t, srv.URL).Complete(context.Background(), "p_1", "xdr", "")
 	if err != nil {
 		t.Fatalf("Complete: %v", err)
 	}
@@ -29,7 +29,7 @@ func TestComplete_TreatsAMissingStatusAsLinked(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	got, err := New(srv.URL).Complete(context.Background(), "p_1", "xdr", "")
+	got, err := testClient(t, srv.URL).Complete(context.Background(), "p_1", "xdr", "")
 	if err != nil {
 		t.Fatalf("Complete: %v", err)
 	}

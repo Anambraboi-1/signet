@@ -4,13 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"net/http"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/spf13/cobra"
 
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/exitcode"
 	"github.com/blockchain-maxis/signet/cli/internal/keys"
 	"github.com/blockchain-maxis/signet/cli/internal/link"
@@ -68,7 +67,13 @@ stellar CLI.`,
 				return err
 			}
 
-			client := deps.NewClient(resolved.BaseURL)
+			client, err := deps.NewClient(resolved.BaseURL, api.Options{
+				UserAgent: api.UserAgent(deps.Version),
+				Insecure:  deps.Insecure,
+			})
+			if err != nil {
+				return err
+			}
 
 			// Ask which handle the key feeds before anything is signed: the
 			// prompt can then name it, and a key that isn't linked is told so
@@ -111,7 +116,7 @@ stellar CLI.`,
 
 			network := deps.Config.Network
 			unsigned, passphrase, err := link.FetchChallenge(
-				&http.Client{Timeout: 15 * time.Second}, resolved.BaseURL, network, spec.CliLinkPurposeUnlink,
+				client.API(), network, spec.CliLinkPurposeUnlink,
 			)(cmd.Context(), publicKey)
 			if err != nil {
 				return err

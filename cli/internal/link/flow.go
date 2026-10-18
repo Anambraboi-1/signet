@@ -2,14 +2,13 @@ package link
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"net/http"
 	"net/url"
 	"strings"
 	"time"
 
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/exitcode"
 	"github.com/blockchain-maxis/signet/cli/internal/loopback"
 	"github.com/blockchain-maxis/signet/cli/internal/pair"
@@ -372,31 +371,21 @@ func wait(
 // `purpose` says what the signed challenge will be used for (#622). The server
 // mints it for that purpose only, so a link challenge that leaks cannot be
 // redeemed at the unlink endpoint, and the reverse.
-func FetchChallenge(client *http.Client, baseURL, network string, purpose spec.CliLinkPurpose) func(context.Context, string) (string, string, error) {
+//
+// Since #601 it rides the shared internal/api transport instead of its own
+// http.Client: minting a challenge is a pure read (nothing is spent until the
+// signed result is submitted), so it is fetched with the retried GET path and
+// gets the User-Agent, Retry-After handling and https-only guard for free.
+func FetchChallenge(client *api.Client, network string, purpose spec.CliLinkPurpose) func(context.Context, string) (string, string, error) {
 	return func(ctx context.Context, account string) (string, string, error) {
 		query := url.Values{"account": {account}, "network": {network}, "purpose": {string(purpose)}}
-		target := strings.TrimRight(baseURL, "/") + "/api/cli-link?" + query.Encode()
-		req, err := http.NewRequestWithContext(ctx, http.MethodGet, target, nil)
-		if err != nil {
-			return "", "", fmt.Errorf("%w: building challenge request: %s", exitcode.ErrNetwork, redact.Secrets(err.Error()))
-		}
-		resp, err := client.Do(req)
-		if err != nil {
-			return "", "", fmt.Errorf("%w: fetching challenge: %s", exitcode.ErrNetwork, redact.Secrets(err.Error()))
-		}
-		defer func() { _ = resp.Body.Close() }()
 
 		var body struct {
 			Transaction       string `json:"transaction"`
 			NetworkPassphrase string `json:"network_passphrase"`
-			Error             string `json:"error"`
 		}
-		_ = json.NewDecoder(resp.Body).Decode(&body)
-		if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-			if body.Error != "" {
-				return "", "", fmt.Errorf("%w: %s", exitcode.ErrNetwork, redact.Secrets(body.Error))
-			}
-			return "", "", fmt.Errorf("%w: challenge request returned %s", exitcode.ErrNetwork, resp.Status)
+		if err := client.Get(ctx, "/api/cli-link?"+query.Encode(), &body); err != nil {
+			return "", "", err
 		}
 		if body.Transaction == "" {
 			return "", "", fmt.Errorf("%w: challenge response carried no transaction", exitcode.ErrNetwork)

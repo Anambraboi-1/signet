@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/keys"
 	"github.com/blockchain-maxis/signet/cli/internal/link"
 	"github.com/blockchain-maxis/signet/cli/internal/redact"
@@ -68,7 +69,14 @@ which keeps key material out of signet entirely.`,
 				return err
 			}
 
-			identity, err := deps.NewClient(resolved.BaseURL).WhoAmI(cmd.Context(), publicKey)
+			client, err := deps.NewClient(resolved.BaseURL, api.Options{
+				UserAgent: api.UserAgent(deps.Version),
+				Insecure:  deps.Insecure,
+			})
+			if err != nil {
+				return err
+			}
+			identity, err := client.WhoAmI(cmd.Context(), publicKey)
 			if err != nil {
 				return err
 			}

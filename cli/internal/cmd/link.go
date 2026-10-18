@@ -5,14 +5,13 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
-	"time"
 
 	"github.com/spf13/cobra"
 
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/browser"
 	"github.com/blockchain-maxis/signet/cli/internal/keys"
 	"github.com/blockchain-maxis/signet/cli/internal/link"
@@ -69,7 +68,13 @@ signing goes through the stellar CLI.`,
 			}
 
 			network := deps.Config.Network
-			client := deps.NewClient(resolved.BaseURL)
+			client, err := deps.NewClient(resolved.BaseURL, api.Options{
+				UserAgent: api.UserAgent(deps.Version),
+				Insecure:  deps.Insecure,
+			})
+			if err != nil {
+				return err
+			}
 
 			// Ctrl-C ends the wait cleanly: link.Run reports the abandoned
 			// pairing (exit 130) instead of the process dying mid-line.
@@ -80,7 +85,7 @@ signing goes through the stellar CLI.`,
 				Start:     client.Start,
 				Poll:      client.Poll,
 				Complete:  client.Complete,
-				Challenge: link.FetchChallenge(&http.Client{Timeout: 15 * time.Second}, resolved.BaseURL, network, spec.CliLinkPurposeLink),
+				Challenge: link.FetchChallenge(client.API(), network, spec.CliLinkPurposeLink),
 				Sign: func(unsigned, passphrase string) (string, error) {
 					return keys.SignChallenge(deps.KeysBinary, source, unsigned, passphrase)
 				},

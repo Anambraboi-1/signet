@@ -11,12 +11,23 @@ import (
 	"testing"
 	"time"
 
+	"github.com/blockchain-maxis/signet/cli/internal/api"
 	"github.com/blockchain-maxis/signet/cli/internal/exitcode"
 	"github.com/blockchain-maxis/signet/cli/internal/loopback"
 	"github.com/blockchain-maxis/signet/cli/internal/pair"
 	"github.com/blockchain-maxis/signet/cli/internal/redact"
 	"github.com/blockchain-maxis/signet/cli/internal/spec"
 )
+
+// apiClient builds the shared transport over an httptest server URL.
+func apiClient(t *testing.T, baseURL string) *api.Client {
+	t.Helper()
+	c, err := api.New(baseURL, api.Options{})
+	if err != nil {
+		t.Fatalf("api.New: %v", err)
+	}
+	return c
+}
 
 // fakeCallbacks stands in for the loopback server without binding a port.
 type fakeCallbacks struct {
@@ -389,7 +400,7 @@ func TestFetchChallenge_RedactsTheServersError(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, _, err := FetchChallenge(srv.Client(), srv.URL, "testnet", spec.CliLinkPurposeLink)(context.Background(), "GABC")
+	_, _, err := FetchChallenge(apiClient(t, srv.URL), "testnet", spec.CliLinkPurposeLink)(context.Background(), "GABC")
 	if !errors.Is(err, exitcode.ErrNetwork) {
 		t.Fatalf("err = %v, want ErrNetwork", err)
 	}
@@ -412,7 +423,7 @@ func TestFetchChallenge_RequestsTheCLILinkChallengeForTheResolvedNetwork(t *test
 	}))
 	defer server.Close()
 
-	got, passphrase, err := FetchChallenge(server.Client(), server.URL+"/", "mainnet", spec.CliLinkPurposeLink)(context.Background(), "GABC")
+	got, passphrase, err := FetchChallenge(apiClient(t, server.URL+"/"), "mainnet", spec.CliLinkPurposeLink)(context.Background(), "GABC")
 	if err != nil {
 		t.Fatalf("FetchChallenge: %v", err)
 	}
@@ -440,7 +451,7 @@ func TestFetchChallenge_SurfacesAServerRefusal(t *testing.T) {
 	}))
 	defer server.Close()
 
-	_, _, err := FetchChallenge(server.Client(), server.URL, "mainnet", spec.CliLinkPurposeLink)(context.Background(), "GABC")
+	_, _, err := FetchChallenge(apiClient(t, server.URL), "mainnet", spec.CliLinkPurposeLink)(context.Background(), "GABC")
 	if !errors.Is(err, exitcode.ErrNetwork) || !strings.Contains(err.Error(), "Network mismatch") {
 		t.Fatalf("err = %v, want a network error carrying the server's message", err)
 	}
@@ -455,7 +466,7 @@ func TestFetchChallenge_AsksForTheChallengeOfTheGivenPurpose(t *testing.T) {
 			got = r.URL.Query().Get("purpose")
 			_, _ = w.Write([]byte(`{"transaction":"AAAAchallenge","network_passphrase":"` + testPassphrase + `"}`))
 		}))
-		if _, _, err := FetchChallenge(server.Client(), server.URL, "testnet", purpose)(context.Background(), "GABC"); err != nil {
+		if _, _, err := FetchChallenge(apiClient(t, server.URL), "testnet", purpose)(context.Background(), "GABC"); err != nil {
 			t.Fatalf("FetchChallenge(%s): %v", purpose, err)
 		}
 		server.Close()
