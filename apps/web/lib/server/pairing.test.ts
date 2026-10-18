@@ -463,7 +463,36 @@ test('describePairing never discloses which profile approved, nor the code itsel
 
   const view = await describePairing(started.state, started.userCode, store);
   assert.equal(view.ok, true);
-  assert.deepEqual(Object.keys(view).sort(), ['expiresAt', 'ok', 'publicKey', 'state']);
+  assert.deepEqual(Object.keys(view).sort(), ['expiresAt', 'network', 'ok', 'publicKey', 'state']);
+});
+
+// ── #617: the network is part of what is being approved ──────────────────
+
+test('describePairing returns the network the CLI declared', async () => {
+  const { store } = fakeStore();
+  const started = (await startPairing('testnet', 'GDECLARED', store))!;
+
+  const view = await describePairing(started.state, started.userCode, store);
+  assert.equal(view.ok, true);
+  assert.equal(view.ok && view.network, 'testnet');
+});
+
+test('describePairing resolves a legacy passphrase row to its network name', async () => {
+  const { store } = fakeStore();
+  const started = (await startPairing('Test SDF Network ; September 2015', 'GDECLARED', store))!;
+
+  const view = await describePairing(started.state, started.userCode, store);
+  assert.equal(view.ok, true);
+  assert.equal(view.ok && view.network, 'testnet');
+});
+
+test('describePairing refuses a row whose network cannot be resolved', async () => {
+  const { store, pairings } = fakeStore();
+  const started = (await startPairing('testnet', 'GDECLARED', store))!;
+  pairings.get(started.state)!.network = 'Some Other Network ; 2026';
+
+  const view = await describePairing(started.state, started.userCode, store);
+  assert.equal(view.ok, false);
 });
 
 // ── reject ───────────────────────────────────────────────────────────────

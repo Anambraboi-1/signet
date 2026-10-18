@@ -299,7 +299,7 @@ export async function pollPairing(pollToken: string, store?: PairingStore): Prom
 // ── describe (the browser approval page) ─────────────────────────────────
 
 export type PairingView =
-  | { ok: true; state: string; publicKey: string; expiresAt: string }
+  | { ok: true; state: string; publicKey: string; network: Network; expiresAt: string }
   | {
       ok: false;
       reason: 'unavailable' | 'not-found' | 'expired' | 'already-used' | 'no-key' | 'code-mismatch';
@@ -342,10 +342,20 @@ export async function describePairing(
     return { ok: false, reason: 'code-mismatch' };
   }
 
+  // The network the CLI declared at `start` (#617): the one fact separating
+  // a testnet link from a mainnet one, so the page can show it and refuse a
+  // mismatch with this deployment. Stored as a canonical name since #616; a
+  // legacy passphrase row still resolves, and a row carrying something
+  // unrecognisable is refused the same way other unusable rows are, rather
+  // than rendered with an Approve button for an unknown network.
+  const network = resolvePairingNetwork(row.network);
+  if (network === null) return { ok: false, reason: 'no-key' };
+
   return {
     ok: true,
     state: row.id,
     publicKey: row.publicKey,
+    network,
     expiresAt: row.expiresAt.toISOString(),
   };
 }

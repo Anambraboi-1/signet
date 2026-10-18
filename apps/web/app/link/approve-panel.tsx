@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type State =
   | { status: 'idle' }
@@ -21,15 +21,52 @@ const mono = { fontFamily: 'var(--font-mono)' } as const;
  */
 export function ApprovePanel({
   state,
+  publicKey,
+  expiresAt,
   callback,
   callbackState,
 }: {
   state: string;
+  /** The declared deploy key, for the copy button (#617). */
+  publicKey: string;
+  /** ISO expiry of the pairing, for the live countdown (#617). */
+  expiresAt: string;
   /** Already validated as a loopback URL by the page; null when absent. */
   callback: string | null;
   callbackState: string | null;
 }) {
   const [ui, setUi] = useState<State>({ status: 'idle' });
+  const [remainingMs, setRemainingMs] = useState(() => new Date(expiresAt).getTime() - Date.now());
+  const [copied, setCopied] = useState(false);
+  // Focus lands on the result once an action resolves, so a keyboard or
+  // screen-reader user is taken to what happened instead of a now-disabled
+  // button (#617).
+  const resultRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const tick = () => setRemainingMs(new Date(expiresAt).getTime() - Date.now());
+    tick();
+    const timer = setInterval(tick, 1_000);
+    return () => clearInterval(timer);
+  }, [expiresAt]);
+
+  useEffect(() => {
+    if (ui.status === 'done' || ui.status === 'error') {
+      resultRef.current?.focus();
+    }
+  }, [ui.status]);
+
+  const expired = remainingMs <= 0;
+
+  async function copyKey() {
+    try {
+      await navigator.clipboard.writeText(publicKey);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2_000);
+    } catch {
+      // Clipboard can be denied; the key is on screen and selectable either way.
+    }
+  }
 
   async function send(action: 'approve' | 'reject') {
     setUi({ status: 'busy', action });
@@ -83,13 +120,18 @@ export function ApprovePanel({
   if (ui.status === 'done') {
     if (ui.action === 'reject') {
       return (
-        <p className="mt-8 text-[13px] leading-[1.7] text-[#8a8779]" style={mono}>
+        <p
+          ref={resultRef as React.RefObject<HTMLParagraphElement | null>}
+          tabIndex={-1}
+          className="mt-8 text-[13px] leading-[1.7] text-[#8a8779] outline-none"
+          style={mono}
+        >
           Rejected. Nothing was linked. You can close this tab.
         </p>
       );
     }
     return (
-      <div className="mt-8">
+      <div ref={resultRef} tabIndex={-1} className="mt-8 outline-none">
         <p className="text-[13px] leading-[1.7] text-[#4d7c3f]" style={mono}>
           Approved. Return to your terminal — the CLI is finishing the link.
         </p>
@@ -119,14 +161,34 @@ export function ApprovePanel({
   }
 
   const busy = ui.status === 'busy';
+  const totalSeconds = Math.max(0, Math.floor(remainingMs / 1000));
+  const countdown = `${Math.floor(totalSeconds / 60)}:${String(totalSeconds % 60).padStart(2, '0')}`;
 
   return (
     <div className="mt-8">
+      <div className="mb-5 flex flex-wrap items-center gap-4">
+        <button
+          type="button"
+          onClick={copyKey}
+          aria-label="Copy deploy wallet address"
+          className="border border-[#1f1d19] px-4 py-2 text-[11px] uppercase tracking-[0.18em] text-[#8a8779] transition-colors hover:border-[#5e5b51] hover:text-[#b8b5a8]"
+          style={mono}
+        >
+          {copied ? 'Copied' : 'Copy deploy wallet'}
+        </button>
+        {/* aria-live so the moment of expiry is announced without a refresh;
+            the steady countdown itself is polite background text. */}
+        <p aria-live="assertive" className="text-[12px] text-[#5e5b51]" style={mono}>
+          {expired
+            ? 'This pairing has expired. Run `signet link` again to get a new one.'
+            : `Expires in ${countdown}`}
+        </p>
+      </div>
       <div className="flex flex-wrap items-center gap-4">
         <button
           type="button"
           onClick={() => send('approve')}
-          disabled={busy}
+          disabled={busy || expired}
           className="inline-flex items-center gap-3 bg-[#f5f4ee] px-7 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-[#0a0908] transition-all duration-300 hover:bg-[#c2410c] hover:text-[#f5f4ee] disabled:opacity-60"
           style={mono}
         >
@@ -136,7 +198,7 @@ export function ApprovePanel({
         <button
           type="button"
           onClick={() => send('reject')}
-          disabled={busy}
+          disabled={busy || expired}
           className="text-[12px] uppercase tracking-[0.18em] text-[#8a8779] transition-colors hover:text-[#8b1a1a] disabled:opacity-60"
           style={mono}
         >
@@ -144,7 +206,12 @@ export function ApprovePanel({
         </button>
       </div>
       {ui.status === 'error' && (
-        <p className="mt-4 text-[12px] text-[#c2410c]" style={mono}>
+        <p
+          ref={resultRef as React.RefObject<HTMLParagraphElement | null>}
+          tabIndex={-1}
+          className="mt-4 text-[12px] text-[#c2410c] outline-none"
+          style={mono}
+        >
           {ui.message}
         </p>
       )}

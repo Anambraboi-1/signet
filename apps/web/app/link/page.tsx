@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { currentAddress } from '@/lib/server/session';
 import { getAccount } from '@/lib/server/account';
 import { describePairing } from '@/lib/server/pairing';
+import { getConfiguredNetwork } from '@/lib/cli-link';
+import { normalizeNetwork } from '@signet/types';
 import { safeCallbackUrl } from '@/lib/loopback-callback';
 import { SignInGate } from '@/app/(dashboard)/components/sign-in-gate';
 import { ApprovePanel } from './approve-panel';
@@ -128,6 +130,20 @@ export default async function LinkApprovalPage({
     );
   }
 
+  // The network the CLI declared vs the one this deployment serves (#617).
+  // `start` already refuses a mismatch, so this only fires when the
+  // deployment's configuration changed mid-pairing — but a page that would
+  // render an Approve button for the wrong network is not worth the race.
+  const configuredNetwork = normalizeNetwork(getConfiguredNetwork());
+  const isMainnet = pairing.network === 'mainnet';
+  if (pairing.network !== configuredNetwork) {
+    return (
+      <Refusal
+        message={`This pairing is for ${pairing.network}, but this deployment serves ${configuredNetwork}. Nothing can be safely approved here — run \`signet link\` again against the right deployment.`}
+      />
+    );
+  }
+
   return (
     <Shell>
       <h1
@@ -139,7 +155,8 @@ export default async function LinkApprovalPage({
 
       <p className="mt-6 max-w-[560px] text-[14px] leading-[1.7] text-[#8a8779]" style={mono}>
         A terminal is asking to attach a deploy wallet to your handle. Contracts deployed from that
-        wallet will be attributed to you. Approve only if you started this.
+        wallet will be attributed to you. Only approve if you just ran `signet link` in your own
+        terminal.
       </p>
 
       <dl className="mt-10 max-w-[640px] border border-[#1f1d19]">
@@ -159,6 +176,28 @@ export default async function LinkApprovalPage({
             @{account.handle}
           </dd>
         </div>
+        <div
+          className={`border-b px-6 py-5 ${isMainnet ? 'border-[#8b1a1a] bg-[#1a0d0a]' : 'border-[#1f1d19]'}`}
+        >
+          <dt
+            className={`text-[10px] uppercase tracking-[0.2em] ${isMainnet ? 'text-[#c2410c]' : 'text-[#5e5b51]'}`}
+            style={mono}
+          >
+            Network
+          </dt>
+          <dd
+            className={`mt-2 text-[13px] uppercase tracking-[0.1em] ${isMainnet ? 'text-[#c2410c]' : 'text-[#b8b5a8]'}`}
+            style={mono}
+          >
+            {pairing.network}
+          </dd>
+          {isMainnet && (
+            <dd className="mt-2 text-[12px] leading-[1.7] text-[#c2410c]" style={mono}>
+              This is mainnet. Contracts attributed through this wallet are real deployments with
+              real funds behind them — read the key above before approving.
+            </dd>
+          )}
+        </div>
         <div className="px-6 py-5">
           <dt className="text-[10px] uppercase tracking-[0.2em] text-[#5e5b51]" style={mono}>
             Does your terminal show this code?
@@ -175,6 +214,8 @@ export default async function LinkApprovalPage({
 
       <ApprovePanel
         state={pairing.state}
+        publicKey={pairing.publicKey}
+        expiresAt={pairing.expiresAt}
         callback={safeCallbackUrl(callback)}
         callbackState={callbackState ?? null}
       />
