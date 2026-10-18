@@ -5,6 +5,7 @@ import {
   REGISTRY,
   REGISTRY_FUNCTIONS,
   REGISTRY_HANDLE,
+  TYPES_ZOO,
   UNDOCUMENTED,
 } from './fixtures/docs-registry';
 
@@ -24,6 +25,7 @@ const HAS_DB = Boolean(process.env.DATABASE_URL);
 
 const registryBase = `/p/${REGISTRY_HANDLE}/contract/${REGISTRY}`;
 const undocumentedBase = `/p/${REGISTRY_HANDLE}/contract/${UNDOCUMENTED}`;
+const typesZooBase = `/p/${REGISTRY_HANDLE}/contract/${TYPES_ZOO}`;
 
 const TABS = [
   { name: 'Overview', segment: '' },
@@ -328,5 +330,52 @@ test.describe('contract docs accessibility and layout @db', () => {
     for (const host of hosts) expect(LOCAL_HOSTS.has(host), `request to ${host}`).toBe(true);
     // The describe-level collector agrees.
     expect(external).toEqual([]);
+  });
+
+  test('client-side search on types_zoo filters by argument name, announces count, reflects ?q=, and Esc restores all (#479)', async ({
+    page,
+  }) => {
+    await page.goto(`${typesZooBase}/functions`);
+    const visibleSections = page.locator('[data-testid="function-section"]:visible');
+    await expect(visibleSections).toHaveCount(14);
+
+    // `/` focuses the filter input
+    const input = page.getByTestId('docs-search-input');
+    // The server-rendered input is visible before hydration attaches the `/` shortcut, so
+    // retry the keypress until the page has hydrated.
+    await expect(async () => {
+      await page.keyboard.press('/');
+      await expect(input).toBeFocused({ timeout: 2_000 });
+    }).toPass();
+
+    // Typing an argument name (`lasts`, taken only by `when`) leaves only that function
+    await page.keyboard.type('lasts');
+    await expect(visibleSections).toHaveCount(1);
+    await expect(visibleSections.first()).toHaveAttribute('id', 'fn-when');
+
+    // URL reflects `?q=lasts` and the live region announces the match count
+    await expect(page).toHaveURL(/\?q=lasts$/);
+    const status = page.getByTestId('docs-search-count');
+    await expect(status).toHaveText('1 of 14 functions matching');
+
+    // `Esc` clears the input, removes `?q=`, and restores all 14 functions
+    await page.keyboard.press('Escape');
+    await expect(input).toHaveValue('');
+    await expect(page).not.toHaveURL(/\?q=/);
+    await expect(visibleSections).toHaveCount(14);
+    await expect(status).toHaveText('');
+
+    // Loading directly with `?q=fixed` filters on mount (`blobs` takes `fixed`)
+    await page.goto(`${typesZooBase}/functions?q=fixed`);
+    await expect(visibleSections).toHaveCount(1);
+    await expect(visibleSections.first()).toHaveAttribute('id', 'fn-blobs');
+    await expect(status).toHaveText('1 of 14 functions matching');
+
+    // With JavaScript disabled the input is hidden and the full list shows. The page streams
+    // its content behind a fallback that needs JS to swap in, so assert on the server HTML:
+    // a `<noscript>` rule hides the search, and all 14 functions are rendered, none filtered.
+    const html = await (await page.request.get(`${typesZooBase}/functions`)).text();
+    expect(html).toMatch(/<noscript>\s*<style>[^<]*\[data-docs-search\][^<]*display:\s*none/);
+    expect(html.match(/data-testid="function-section"/g)).toHaveLength(14);
   });
 });
