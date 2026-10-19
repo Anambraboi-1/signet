@@ -12,7 +12,7 @@
       <path d="M0,0 L10,3.5 L0,7 Z" class="diagram-edge-marker" />
     </marker>
   </defs>
-  <a href="#fn-gas_service" data-node-id="fn:gas_service">
+  <a id="diagram-fn-gas_service" href="#fn-gas_service" data-node-id="fn:gas_service">
     <rect
       id="axelar-its-node-fn:gas_service"
       class="diagram-node diagram-node--function"
@@ -33,7 +33,7 @@
       gas_service
     </text>
   </a>
-  <a href="#fn-chain_name" data-node-id="fn:chain_name">
+  <a id="diagram-fn-chain_name" href="#fn-chain_name" data-node-id="fn:chain_name">
     <rect
       id="axelar-its-node-fn:chain_name"
       class="diagram-node diagram-node--function"
@@ -54,7 +54,7 @@
       chain_name
     </text>
   </a>
-  <a href="#fn-its_hub_chain_name" data-node-id="fn:its_hub_chain_name">
+  <a id="diagram-fn-its_hub_chain_name" href="#fn-its_hub_chain_name" data-node-id="fn:its_hub_chain_name">
     <rect
       id="axelar-its-node-fn:its_hub_chain_name"
       class="diagram-node diagram-node--function"
@@ -75,7 +75,7 @@
       its_hub_chain_name
     </text>
   </a>
-  <a href="#fn-its_hub_address" data-node-id="fn:its_hub_address">
+  <a id="diagram-fn-its_hub_address" href="#fn-its_hub_address" data-node-id="fn:its_hub_address">
     <rect
       id="axelar-its-node-fn:its_hub_address"
       class="diagram-node diagram-node--function"
@@ -96,7 +96,7 @@
       its_hub_address
     </text>
   </a>
-  <a href="#fn-native_token_address" data-node-id="fn:native_token_address">
+  <a id="diagram-fn-native_token_address" href="#fn-native_token_address" data-node-id="fn:native_token_address">
     <rect
       id="axelar-its-node-fn:native_token_address"
       class="diagram-node diagram-node--function"
@@ -117,7 +117,7 @@
       native_token_address
     </text>
   </a>
-  <a href="#fn-is_trusted_chain" data-node-id="fn:is_trusted_chain">
+  <a id="diagram-fn-is_trusted_chain" href="#fn-is_trusted_chain" data-node-id="fn:is_trusted_chain">
     <rect
       id="axelar-its-node-fn:is_trusted_chain"
       class="diagram-node diagram-node--function"
@@ -138,7 +138,7 @@
       is_trusted_chain
     </text>
   </a>
-  <a href="#fn-set_trusted_chain" data-node-id="fn:set_trusted_chain">
+  <a id="diagram-fn-set_trusted_chain" href="#fn-set_trusted_chain" data-node-id="fn:set_trusted_chain">
     <rect
       id="axelar-its-node-fn:set_trusted_chain"
       class="diagram-node diagram-node--function"
@@ -159,7 +159,7 @@
       set_trusted_chain
     </text>
   </a>
-  <a href="#fn-remove_trusted_chain" data-node-id="fn:remove_trusted_chain">
+  <a id="diagram-fn-remove_trusted_chain" href="#fn-remove_trusted_chain" data-node-id="fn:remove_trusted_chain">
     <rect
       id="axelar-its-node-fn:remove_trusted_chain"
       class="diagram-node diagram-node--function"
@@ -180,7 +180,7 @@
       remove_trusted_chain
     </text>
   </a>
-  <a href="#fn-canonical_interchain_token_id" data-node-id="fn:canonical_interchain_token_id">
+  <a id="diagram-fn-canonical_interchain_token_id" href="#fn-canonical_interchain_token_id" data-node-id="fn:canonical_interchain_token_id">
     <rect
       id="axelar-its-node-fn:canonical_interchain_token_id"
       class="diagram-node diagram-node--function"
@@ -201,7 +201,7 @@
       canonical_interchain_toke…
     </text>
   </a>
-  <a href="#fn-linked_token_id" data-node-id="fn:linked_token_id">
+  <a id="diagram-fn-linked_token_id" href="#fn-linked_token_id" data-node-id="fn:linked_token_id">
     <rect
       id="axelar-its-node-fn:linked_token_id"
       class="diagram-node diagram-node--function"
@@ -222,7 +222,7 @@
       linked_token_id
     </text>
   </a>
-  <a href="#fn-registered_token_address" data-node-id="fn:registered_token_address">
+  <a id="diagram-fn-registered_token_address" href="#fn-registered_token_address" data-node-id="fn:registered_token_address">
     <rect
       id="axelar-its-node-fn:registered_token_address"
       class="diagram-node diagram-node--function"
@@ -243,7 +243,7 @@
       registered_token_address
     </text>
   </a>
-  <a href="#fn-deployed_token_manager" data-node-id="fn:deployed_token_manager">
+  <a id="diagram-fn-deployed_token_manager" href="#fn-deployed_token_manager" data-node-id="fn:deployed_token_manager">
     <rect
       id="axelar-its-node-fn:deployed_token_manager"
       class="diagram-node diagram-node--function"
@@ -264,7 +264,7 @@
       deployed_token_manager
     </text>
   </a>
-  <a href="#fn-is_flow_limiter" data-node-id="fn:is_flow_limiter">
+  <a id="diagram-fn-is_flow_limiter" href="#fn-is_flow_limiter" data-node-id="fn:is_flow_limiter">
     <rect
       id="axelar-its-node-fn:is_flow_limiter"
       class="diagram-node diagram-node--function"
@@ -285,7 +285,7 @@
       is_flow_limiter
     </text>
   </a>
-  <a href="#fn-set_flow_limit" data-node-id="fn:set_flow_limit">
+  <a id="diagram-fn-set_flow_limit" href="#fn-set_flow_limit" data-node-id="fn:set_flow_limit">
     <rect
       id="axelar-its-node-fn:set_flow_limit"
       class="diagram-node diagram-node--function"
@@ -306,7 +306,7 @@
       set_flow_limit
     </text>
   </a>
-  <a href="#fn-add_flow_limiter" data-node-id="fn:add_flow_limiter">
+  <a id="diagram-fn-add_flow_limiter" href="#fn-add_flow_limiter" data-node-id="fn:add_flow_limiter">
     <rect
       id="axelar-its-node-fn:add_flow_limiter"
       class="diagram-node diagram-node--function"
@@ -327,7 +327,7 @@
       add_flow_limiter
     </text>
   </a>
-  <a href="#fn-remove_flow_limiter" data-node-id="fn:remove_flow_limiter">
+  <a id="diagram-fn-remove_flow_limiter" href="#fn-remove_flow_limiter" data-node-id="fn:remove_flow_limiter">
     <rect
       id="axelar-its-node-fn:remove_flow_limiter"
       class="diagram-node diagram-node--function"
@@ -348,7 +348,7 @@
       remove_flow_limiter
     </text>
   </a>
-  <a href="#fn-link_token" data-node-id="fn:link_token">
+  <a id="diagram-fn-link_token" href="#fn-link_token" data-node-id="fn:link_token">
     <rect
       id="axelar-its-node-fn:link_token"
       class="diagram-node diagram-node--function"
@@ -369,7 +369,7 @@
       link_token
     </text>
   </a>
-  <a href="#fn-operator" data-node-id="fn:operator">
+  <a id="diagram-fn-operator" href="#fn-operator" data-node-id="fn:operator">
     <rect
       id="axelar-its-node-fn:operator"
       class="diagram-node diagram-node--function"
@@ -390,7 +390,7 @@
       operator
     </text>
   </a>
-  <a href="#fn-owner" data-node-id="fn:owner">
+  <a id="diagram-fn-owner" href="#fn-owner" data-node-id="fn:owner">
     <rect
       id="axelar-its-node-fn:owner"
       class="diagram-node diagram-node--function"
@@ -411,7 +411,7 @@
       owner
     </text>
   </a>
-  <a href="#fn-paused" data-node-id="fn:paused">
+  <a id="diagram-fn-paused" href="#fn-paused" data-node-id="fn:paused">
     <rect
       id="axelar-its-node-fn:paused"
       class="diagram-node diagram-node--function"
@@ -432,7 +432,7 @@
       paused
     </text>
   </a>
-  <a href="#fn-pause" data-node-id="fn:pause">
+  <a id="diagram-fn-pause" href="#fn-pause" data-node-id="fn:pause">
     <rect
       id="axelar-its-node-fn:pause"
       class="diagram-node diagram-node--function"
@@ -453,7 +453,7 @@
       pause
     </text>
   </a>
-  <a href="#fn-unpause" data-node-id="fn:unpause">
+  <a id="diagram-fn-unpause" href="#fn-unpause" data-node-id="fn:unpause">
     <rect
       id="axelar-its-node-fn:unpause"
       class="diagram-node diagram-node--function"
@@ -474,7 +474,7 @@
       unpause
     </text>
   </a>
-  <a href="#fn-required_auths" data-node-id="fn:required_auths">
+  <a id="diagram-fn-required_auths" href="#fn-required_auths" data-node-id="fn:required_auths">
     <rect
       id="axelar-its-node-fn:required_auths"
       class="diagram-node diagram-node--function"
@@ -495,7 +495,7 @@
       required_auths
     </text>
   </a>
-  <a href="#fn-migrate" data-node-id="fn:migrate">
+  <a id="diagram-fn-migrate" href="#fn-migrate" data-node-id="fn:migrate">
     <rect
       id="axelar-its-node-fn:migrate"
       class="diagram-node diagram-node--function"
@@ -516,7 +516,7 @@
       migrate
     </text>
   </a>
-  <a href="#fn-gateway" data-node-id="fn:gateway">
+  <a id="diagram-fn-gateway" href="#fn-gateway" data-node-id="fn:gateway">
     <rect
       id="axelar-its-node-fn:gateway"
       class="diagram-node diagram-node--function"
@@ -537,7 +537,7 @@
       gateway
     </text>
   </a>
-  <a href="#fn-execute" data-node-id="fn:execute">
+  <a id="diagram-fn-execute" href="#fn-execute" data-node-id="fn:execute">
     <rect
       id="axelar-its-node-fn:execute"
       class="diagram-node diagram-node--function"
@@ -558,7 +558,7 @@
       execute
     </text>
   </a>
-  <a href="#fn-interchain_token_wasm_hash" data-node-id="fn:interchain_token_wasm_hash">
+  <a id="diagram-fn-interchain_token_wasm_hash" href="#fn-interchain_token_wasm_hash" data-node-id="fn:interchain_token_wasm_hash">
     <rect
       id="axelar-its-node-fn:interchain_token_wasm_hash"
       class="diagram-node diagram-node--function"
@@ -579,7 +579,7 @@
       interchain_token_wasm_hash
     </text>
   </a>
-  <a href="#fn-interchain_token_id" data-node-id="fn:interchain_token_id">
+  <a id="diagram-fn-interchain_token_id" href="#fn-interchain_token_id" data-node-id="fn:interchain_token_id">
     <rect
       id="axelar-its-node-fn:interchain_token_id"
       class="diagram-node diagram-node--function"
@@ -600,7 +600,7 @@
       interchain_token_id
     </text>
   </a>
-  <a href="#fn-interchain_token_address" data-node-id="fn:interchain_token_address">
+  <a id="diagram-fn-interchain_token_address" href="#fn-interchain_token_address" data-node-id="fn:interchain_token_address">
     <rect
       id="axelar-its-node-fn:interchain_token_address"
       class="diagram-node diagram-node--function"
@@ -621,7 +621,7 @@
       interchain_token_address
     </text>
   </a>
-  <a href="#fn-interchain_transfer" data-node-id="fn:interchain_transfer">
+  <a id="diagram-fn-interchain_transfer" href="#fn-interchain_transfer" data-node-id="fn:interchain_transfer">
     <rect
       id="axelar-its-node-fn:interchain_transfer"
       class="diagram-node diagram-node--function"
@@ -642,7 +642,7 @@
       interchain_transfer
     </text>
   </a>
-  <a href="#fn-transfer_flow_limiter" data-node-id="fn:transfer_flow_limiter">
+  <a id="diagram-fn-transfer_flow_limiter" href="#fn-transfer_flow_limiter" data-node-id="fn:transfer_flow_limiter">
     <rect
       id="axelar-its-node-fn:transfer_flow_limiter"
       class="diagram-node diagram-node--function"
@@ -663,7 +663,7 @@
       transfer_flow_limiter
     </text>
   </a>
-  <a href="#fn-transfer_token_admin" data-node-id="fn:transfer_token_admin">
+  <a id="diagram-fn-transfer_token_admin" href="#fn-transfer_token_admin" data-node-id="fn:transfer_token_admin">
     <rect
       id="axelar-its-node-fn:transfer_token_admin"
       class="diagram-node diagram-node--function"
@@ -684,7 +684,7 @@
       transfer_token_admin
     </text>
   </a>
-  <a href="#fn-transfer_operatorship" data-node-id="fn:transfer_operatorship">
+  <a id="diagram-fn-transfer_operatorship" href="#fn-transfer_operatorship" data-node-id="fn:transfer_operatorship">
     <rect
       id="axelar-its-node-fn:transfer_operatorship"
       class="diagram-node diagram-node--function"
@@ -705,7 +705,7 @@
       transfer_operatorship
     </text>
   </a>
-  <a href="#fn-transfer_ownership" data-node-id="fn:transfer_ownership">
+  <a id="diagram-fn-transfer_ownership" href="#fn-transfer_ownership" data-node-id="fn:transfer_ownership">
     <rect
       id="axelar-its-node-fn:transfer_ownership"
       class="diagram-node diagram-node--function"
@@ -726,7 +726,7 @@
       transfer_ownership
     </text>
   </a>
-  <a href="#fn-deploy_interchain_token" data-node-id="fn:deploy_interchain_token">
+  <a id="diagram-fn-deploy_interchain_token" href="#fn-deploy_interchain_token" data-node-id="fn:deploy_interchain_token">
     <rect
       id="axelar-its-node-fn:deploy_interchain_token"
       class="diagram-node diagram-node--function"
@@ -747,7 +747,7 @@
       deploy_interchain_token
     </text>
   </a>
-  <a href="#fn-deploy_remote_interchain_token" data-node-id="fn:deploy_remote_interchain_token">
+  <a id="diagram-fn-deploy_remote_interchain_token" href="#fn-deploy_remote_interchain_token" data-node-id="fn:deploy_remote_interchain_token">
     <rect
       id="axelar-its-node-fn:deploy_remote_interchain_token"
       class="diagram-node diagram-node--function"
@@ -768,7 +768,7 @@
       deploy_remote_interchain_…
     </text>
   </a>
-  <a href="#fn-deploy_remote_canonical_token" data-node-id="fn:deploy_remote_canonical_token">
+  <a id="diagram-fn-deploy_remote_canonical_token" href="#fn-deploy_remote_canonical_token" data-node-id="fn:deploy_remote_canonical_token">
     <rect
       id="axelar-its-node-fn:deploy_remote_canonical_token"
       class="diagram-node diagram-node--function"
@@ -789,7 +789,7 @@
       deploy_remote_canonical_t…
     </text>
   </a>
-  <a href="#fn-flow_limit" data-node-id="fn:flow_limit">
+  <a id="diagram-fn-flow_limit" href="#fn-flow_limit" data-node-id="fn:flow_limit">
     <rect
       id="axelar-its-node-fn:flow_limit"
       class="diagram-node diagram-node--function"
@@ -810,7 +810,7 @@
       flow_limit
     </text>
   </a>
-  <a href="#fn-flow_out_amount" data-node-id="fn:flow_out_amount">
+  <a id="diagram-fn-flow_out_amount" href="#fn-flow_out_amount" data-node-id="fn:flow_out_amount">
     <rect
       id="axelar-its-node-fn:flow_out_amount"
       class="diagram-node diagram-node--function"
@@ -831,7 +831,7 @@
       flow_out_amount
     </text>
   </a>
-  <a href="#fn-flow_in_amount" data-node-id="fn:flow_in_amount">
+  <a id="diagram-fn-flow_in_amount" href="#fn-flow_in_amount" data-node-id="fn:flow_in_amount">
     <rect
       id="axelar-its-node-fn:flow_in_amount"
       class="diagram-node diagram-node--function"
@@ -852,7 +852,7 @@
       flow_in_amount
     </text>
   </a>
-  <a href="#fn-__constructor" data-node-id="fn:__constructor">
+  <a id="diagram-fn-__constructor" href="#fn-__constructor" data-node-id="fn:__constructor">
     <rect
       id="axelar-its-node-fn:__constructor"
       class="diagram-node diagram-node--function"
@@ -873,7 +873,7 @@
       __constructor
     </text>
   </a>
-  <a href="#fn-version" data-node-id="fn:version">
+  <a id="diagram-fn-version" href="#fn-version" data-node-id="fn:version">
     <rect
       id="axelar-its-node-fn:version"
       class="diagram-node diagram-node--function"
@@ -894,7 +894,7 @@
       version
     </text>
   </a>
-  <a href="#fn-upgrade" data-node-id="fn:upgrade">
+  <a id="diagram-fn-upgrade" href="#fn-upgrade" data-node-id="fn:upgrade">
     <rect
       id="axelar-its-node-fn:upgrade"
       class="diagram-node diagram-node--function"
@@ -915,7 +915,7 @@
       upgrade
     </text>
   </a>
-  <a href="#fn-register_canonical_token" data-node-id="fn:register_canonical_token">
+  <a id="diagram-fn-register_canonical_token" href="#fn-register_canonical_token" data-node-id="fn:register_canonical_token">
     <rect
       id="axelar-its-node-fn:register_canonical_token"
       class="diagram-node diagram-node--function"
@@ -936,7 +936,7 @@
       register_canonical_token
     </text>
   </a>
-  <a href="#fn-register_token_metadata" data-node-id="fn:register_token_metadata">
+  <a id="diagram-fn-register_token_metadata" href="#fn-register_token_metadata" data-node-id="fn:register_token_metadata">
     <rect
       id="axelar-its-node-fn:register_token_metadata"
       class="diagram-node diagram-node--function"
@@ -957,7 +957,7 @@
       register_token_metadata
     </text>
   </a>
-  <a href="#fn-register_custom_token" data-node-id="fn:register_custom_token">
+  <a id="diagram-fn-register_custom_token" href="#fn-register_custom_token" data-node-id="fn:register_custom_token">
     <rect
       id="axelar-its-node-fn:register_custom_token"
       class="diagram-node diagram-node--function"
@@ -978,7 +978,7 @@
       register_custom_token
     </text>
   </a>
-  <a href="#fn-token_manager_wasm_hash" data-node-id="fn:token_manager_wasm_hash">
+  <a id="diagram-fn-token_manager_wasm_hash" href="#fn-token_manager_wasm_hash" data-node-id="fn:token_manager_wasm_hash">
     <rect
       id="axelar-its-node-fn:token_manager_wasm_hash"
       class="diagram-node diagram-node--function"
@@ -999,7 +999,7 @@
       token_manager_wasm_hash
     </text>
   </a>
-  <a href="#fn-token_manager_address" data-node-id="fn:token_manager_address">
+  <a id="diagram-fn-token_manager_address" href="#fn-token_manager_address" data-node-id="fn:token_manager_address">
     <rect
       id="axelar-its-node-fn:token_manager_address"
       class="diagram-node diagram-node--function"
@@ -1020,7 +1020,7 @@
       token_manager_address
     </text>
   </a>
-  <a href="#fn-token_manager_type" data-node-id="fn:token_manager_type">
+  <a id="diagram-fn-token_manager_type" href="#fn-token_manager_type" data-node-id="fn:token_manager_type">
     <rect
       id="axelar-its-node-fn:token_manager_type"
       class="diagram-node diagram-node--function"

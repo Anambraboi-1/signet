@@ -175,6 +175,8 @@ export function placeCard(
 export interface EnhanceDetailsOptions {
   /** Gap between node and card, and from the viewport edge. Defaults to `DEFAULT_GAP`. */
   gap?: number;
+  /** Optional callback to render additional actions/footer into the card. */
+  renderFooter?: (card: HTMLElement, nodeId: string) => void;
 }
 
 let cardSeq = 0;
@@ -278,6 +280,10 @@ export function enhanceDetails(
       value.textContent = section.value;
       row.append(label, value);
       card.appendChild(row);
+    }
+
+    if (options.renderFooter && nodeId) {
+      options.renderFooter(card, nodeId);
     }
 
     nodeEl.setAttribute('aria-describedby', cardId);

@@ -1,0 +1,85 @@
+/* @signet/visualiser permalinks and focused node styles (issue 505) */
+
+.contract-diagram .viz-focused,
+[data-node-id].viz-focused {
+  opacity: 1;
+}
+
+.contract-diagram .viz-focused rect,
+[data-node-id].viz-focused rect,
+rect.viz-focused {
+  stroke: var(--viz-focus, #60a5fa);
+  stroke-width: 2.5px;
+}
+
+.contract-diagram .viz-neighbour,
+[data-node-id].viz-neighbour {
+  opacity: 1;
+}
+
+.contract-diagram .viz-neighbour rect,
+[data-node-id].viz-neighbour rect,
+rect.viz-neighbour {
+  stroke: var(--viz-accent, #e05252);
+  stroke-width: 2px;
+}
+
+.contract-diagram .viz-dimmed,
+[data-node-id].viz-dimmed {
+  opacity: 0.35;
+  color: var(--viz-muted, #9e9a8f);
+  font-weight: normal;
+}
+
+.contract-diagram .viz-dimmed text,
+[data-node-id].viz-dimmed text,
+text.viz-dimmed {
+  fill: var(--viz-muted, #9e9a8f);
+  font-weight: normal;
+}
+
+.contract-diagram line.viz-dimmed,
+.contract-diagram polyline.viz-dimmed,
+.contract-diagram path.viz-dimmed {
+  opacity: 0.25;
+}
+
+.viz-details-card__permalink-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: var(--typeface-mono-regular, ui-monospace, monospace);
+  color: var(--viz-node-text, #f5f4ee);
+  background: transparent;
+  border: 1px solid var(--viz-edge, #736e62);
+  border-radius: 4px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.viz-details-card__permalink-btn:hover {
+  border-color: var(--viz-accent, #e05252);
+  color: var(--viz-accent, #e05252);
+}
+
+.viz-details-card__permalink-btn:focus-visible {
+  outline: 2px solid var(--viz-focus, #60a5fa);
+  outline-offset: 1px;
+}
+
+.viz-permalink-fallback {
+  width: 100%;
+  margin-top: 6px;
+  font-size: 11px;
+  font-family: var(--typeface-mono-regular, ui-monospace, monospace);
+  padding: 3px 6px;
+  background: var(--viz-node, #181614);
+  color: var(--viz-node-text, #f5f4ee);
+  border: 1px solid var(--viz-edge, #736e62);
+  border-radius: 4px;
+  pointer-events: auto;
+}

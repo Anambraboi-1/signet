@@ -108,7 +108,7 @@
     x1="100" y1="100" x2="300" y2="100"
     marker-end="url(#arrowhead)"
   />
-  <a href="#fn-initialize" data-node-id="fn:initialize">
+  <a id="diagram-fn-initialize" href="#fn-initialize" data-node-id="fn:initialize">
     <rect
       id="blend-pool-v1-node-fn:initialize"
       class="diagram-node diagram-node--function"
@@ -129,7 +129,7 @@
       initialize
     </text>
   </a>
-  <a href="#fn-set_admin" data-node-id="fn:set_admin">
+  <a id="diagram-fn-set_admin" href="#fn-set_admin" data-node-id="fn:set_admin">
     <rect
       id="blend-pool-v1-node-fn:set_admin"
       class="diagram-node diagram-node--function"
@@ -150,7 +150,7 @@
       set_admin
     </text>
   </a>
-  <a href="#fn-update_pool" data-node-id="fn:update_pool">
+  <a id="diagram-fn-update_pool" href="#fn-update_pool" data-node-id="fn:update_pool">
     <rect
       id="blend-pool-v1-node-fn:update_pool"
       class="diagram-node diagram-node--function"
@@ -171,7 +171,7 @@
       update_pool
     </text>
   </a>
-  <a href="#fn-queue_set_reserve" data-node-id="fn:queue_set_reserve">
+  <a id="diagram-fn-queue_set_reserve" href="#fn-queue_set_reserve" data-node-id="fn:queue_set_reserve">
     <rect
       id="blend-pool-v1-node-fn:queue_set_reserve"
       class="diagram-node diagram-node--function"
@@ -192,7 +192,7 @@
       queue_set_reserve
     </text>
   </a>
-  <a href="#fn-cancel_set_reserve" data-node-id="fn:cancel_set_reserve">
+  <a id="diagram-fn-cancel_set_reserve" href="#fn-cancel_set_reserve" data-node-id="fn:cancel_set_reserve">
     <rect
       id="blend-pool-v1-node-fn:cancel_set_reserve"
       class="diagram-node diagram-node--function"
@@ -213,7 +213,7 @@
       cancel_set_reserve
     </text>
   </a>
-  <a href="#fn-set_reserve" data-node-id="fn:set_reserve">
+  <a id="diagram-fn-set_reserve" href="#fn-set_reserve" data-node-id="fn:set_reserve">
     <rect
       id="blend-pool-v1-node-fn:set_reserve"
       class="diagram-node diagram-node--function"
@@ -234,7 +234,7 @@
       set_reserve
     </text>
   </a>
-  <a href="#fn-get_positions" data-node-id="fn:get_positions">
+  <a id="diagram-fn-get_positions" href="#fn-get_positions" data-node-id="fn:get_positions">
     <rect
       id="blend-pool-v1-node-fn:get_positions"
       class="diagram-node diagram-node--function"
@@ -255,7 +255,7 @@
       get_positions
     </text>
   </a>
-  <a href="#fn-submit" data-node-id="fn:submit">
+  <a id="diagram-fn-submit" href="#fn-submit" data-node-id="fn:submit">
     <rect
       id="blend-pool-v1-node-fn:submit"
       class="diagram-node diagram-node--function"
@@ -276,7 +276,7 @@
       submit
     </text>
   </a>
-  <a href="#fn-bad_debt" data-node-id="fn:bad_debt">
+  <a id="diagram-fn-bad_debt" href="#fn-bad_debt" data-node-id="fn:bad_debt">
     <rect
       id="blend-pool-v1-node-fn:bad_debt"
       class="diagram-node diagram-node--function"
@@ -297,7 +297,7 @@
       bad_debt
     </text>
   </a>
-  <a href="#fn-update_status" data-node-id="fn:update_status">
+  <a id="diagram-fn-update_status" href="#fn-update_status" data-node-id="fn:update_status">
     <rect
       id="blend-pool-v1-node-fn:update_status"
       class="diagram-node diagram-node--function"
@@ -318,7 +318,7 @@
       update_status
     </text>
   </a>
-  <a href="#fn-set_status" data-node-id="fn:set_status">
+  <a id="diagram-fn-set_status" href="#fn-set_status" data-node-id="fn:set_status">
     <rect
       id="blend-pool-v1-node-fn:set_status"
       class="diagram-node diagram-node--function"
@@ -339,7 +339,7 @@
       set_status
     </text>
   </a>
-  <a href="#fn-gulp_emissions" data-node-id="fn:gulp_emissions">
+  <a id="diagram-fn-gulp_emissions" href="#fn-gulp_emissions" data-node-id="fn:gulp_emissions">
     <rect
       id="blend-pool-v1-node-fn:gulp_emissions"
       class="diagram-node diagram-node--function"
@@ -360,7 +360,7 @@
       gulp_emissions
     </text>
   </a>
-  <a href="#fn-set_emissions_config" data-node-id="fn:set_emissions_config">
+  <a id="diagram-fn-set_emissions_config" href="#fn-set_emissions_config" data-node-id="fn:set_emissions_config">
     <rect
       id="blend-pool-v1-node-fn:set_emissions_config"
       class="diagram-node diagram-node--function"
@@ -381,7 +381,7 @@
       set_emissions_config
     </text>
   </a>
-  <a href="#fn-claim" data-node-id="fn:claim">
+  <a id="diagram-fn-claim" href="#fn-claim" data-node-id="fn:claim">
     <rect
       id="blend-pool-v1-node-fn:claim"
       class="diagram-node diagram-node--function"
@@ -402,7 +402,7 @@
       claim
     </text>
   </a>
-  <a href="#fn-new_liquidation_auction" data-node-id="fn:new_liquidation_auction">
+  <a id="diagram-fn-new_liquidation_auction" href="#fn-new_liquidation_auction" data-node-id="fn:new_liquidation_auction">
     <rect
       id="blend-pool-v1-node-fn:new_liquidation_auction"
       class="diagram-node diagram-node--function"
@@ -423,7 +423,7 @@
       new_liquidation_auction
     </text>
   </a>
-  <a href="#fn-get_auction" data-node-id="fn:get_auction">
+  <a id="diagram-fn-get_auction" href="#fn-get_auction" data-node-id="fn:get_auction">
     <rect
       id="blend-pool-v1-node-fn:get_auction"
       class="diagram-node diagram-node--function"
@@ -444,7 +444,7 @@
       get_auction
     </text>
   </a>
-  <a href="#fn-new_bad_debt_auction" data-node-id="fn:new_bad_debt_auction">
+  <a id="diagram-fn-new_bad_debt_auction" href="#fn-new_bad_debt_auction" data-node-id="fn:new_bad_debt_auction">
     <rect
       id="blend-pool-v1-node-fn:new_bad_debt_auction"
       class="diagram-node diagram-node--function"
@@ -465,7 +465,7 @@
       new_bad_debt_auction
     </text>
   </a>
-  <a href="#fn-new_interest_auction" data-node-id="fn:new_interest_auction">
+  <a id="diagram-fn-new_interest_auction" href="#fn-new_interest_auction" data-node-id="fn:new_interest_auction">
     <rect
       id="blend-pool-v1-node-fn:new_interest_auction"
       class="diagram-node diagram-node--function"
@@ -486,7 +486,7 @@
       new_interest_auction
     </text>
   </a>
-  <a href="#type-AuctionData" data-node-id="type:AuctionData">
+  <a id="diagram-type-AuctionData" href="#type-AuctionData" data-node-id="type:AuctionData">
     <rect
       id="blend-pool-v1-node-type:AuctionData"
       class="diagram-node diagram-node--type"
@@ -507,7 +507,7 @@
       AuctionData
     </text>
   </a>
-  <a href="#type-ReserveEmissionMetadata" data-node-id="type:ReserveEmissionMetadata">
+  <a id="diagram-type-ReserveEmissionMetadata" href="#type-ReserveEmissionMetadata" data-node-id="type:ReserveEmissionMetadata">
     <rect
       id="blend-pool-v1-node-type:ReserveEmissionMetadata"
       class="diagram-node diagram-node--type"
@@ -528,7 +528,7 @@
       ReserveEmissionMetadata
     </text>
   </a>
-  <a href="#type-Request" data-node-id="type:Request">
+  <a id="diagram-type-Request" href="#type-Request" data-node-id="type:Request">
     <rect
       id="blend-pool-v1-node-type:Request"
       class="diagram-node diagram-node--type"
@@ -549,7 +549,7 @@
       Request
     </text>
   </a>
-  <a href="#type-Reserve" data-node-id="type:Reserve">
+  <a id="diagram-type-Reserve" href="#type-Reserve" data-node-id="type:Reserve">
     <rect
       id="blend-pool-v1-node-type:Reserve"
       class="diagram-node diagram-node--type"
@@ -570,7 +570,7 @@
       Reserve
     </text>
   </a>
-  <a href="#type-Positions" data-node-id="type:Positions">
+  <a id="diagram-type-Positions" href="#type-Positions" data-node-id="type:Positions">
     <rect
       id="blend-pool-v1-node-type:Positions"
       class="diagram-node diagram-node--type"
@@ -591,7 +591,7 @@
       Positions
     </text>
   </a>
-  <a href="#type-PoolConfig" data-node-id="type:PoolConfig">
+  <a id="diagram-type-PoolConfig" href="#type-PoolConfig" data-node-id="type:PoolConfig">
     <rect
       id="blend-pool-v1-node-type:PoolConfig"
       class="diagram-node diagram-node--type"
@@ -612,7 +612,7 @@
       PoolConfig
     </text>
   </a>
-  <a href="#type-PoolEmissionConfig" data-node-id="type:PoolEmissionConfig">
+  <a id="diagram-type-PoolEmissionConfig" href="#type-PoolEmissionConfig" data-node-id="type:PoolEmissionConfig">
     <rect
       id="blend-pool-v1-node-type:PoolEmissionConfig"
       class="diagram-node diagram-node--type"
@@ -633,7 +633,7 @@
       PoolEmissionConfig
     </text>
   </a>
-  <a href="#type-ReserveConfig" data-node-id="type:ReserveConfig">
+  <a id="diagram-type-ReserveConfig" href="#type-ReserveConfig" data-node-id="type:ReserveConfig">
     <rect
       id="blend-pool-v1-node-type:ReserveConfig"
       class="diagram-node diagram-node--type"
@@ -654,7 +654,7 @@
       ReserveConfig
     </text>
   </a>
-  <a href="#type-QueuedReserveInit" data-node-id="type:QueuedReserveInit">
+  <a id="diagram-type-QueuedReserveInit" href="#type-QueuedReserveInit" data-node-id="type:QueuedReserveInit">
     <rect
       id="blend-pool-v1-node-type:QueuedReserveInit"
       class="diagram-node diagram-node--type"
@@ -675,7 +675,7 @@
       QueuedReserveInit
     </text>
   </a>
-  <a href="#type-ReserveData" data-node-id="type:ReserveData">
+  <a id="diagram-type-ReserveData" href="#type-ReserveData" data-node-id="type:ReserveData">
     <rect
       id="blend-pool-v1-node-type:ReserveData"
       class="diagram-node diagram-node--type"
@@ -696,7 +696,7 @@
       ReserveData
     </text>
   </a>
-  <a href="#type-ReserveEmissionsConfig" data-node-id="type:ReserveEmissionsConfig">
+  <a id="diagram-type-ReserveEmissionsConfig" href="#type-ReserveEmissionsConfig" data-node-id="type:ReserveEmissionsConfig">
     <rect
       id="blend-pool-v1-node-type:ReserveEmissionsConfig"
       class="diagram-node diagram-node--type"
@@ -717,7 +717,7 @@
       ReserveEmissionsConfig
     </text>
   </a>
-  <a href="#type-ReserveEmissionsData" data-node-id="type:ReserveEmissionsData">
+  <a id="diagram-type-ReserveEmissionsData" href="#type-ReserveEmissionsData" data-node-id="type:ReserveEmissionsData">
     <rect
       id="blend-pool-v1-node-type:ReserveEmissionsData"
       class="diagram-node diagram-node--type"
@@ -738,7 +738,7 @@
       ReserveEmissionsData
     </text>
   </a>
-  <a href="#type-UserEmissionData" data-node-id="type:UserEmissionData">
+  <a id="diagram-type-UserEmissionData" href="#type-UserEmissionData" data-node-id="type:UserEmissionData">
     <rect
       id="blend-pool-v1-node-type:UserEmissionData"
       class="diagram-node diagram-node--type"
@@ -759,7 +759,7 @@
       UserEmissionData
     </text>
   </a>
-  <a href="#type-UserReserveKey" data-node-id="type:UserReserveKey">
+  <a id="diagram-type-UserReserveKey" href="#type-UserReserveKey" data-node-id="type:UserReserveKey">
     <rect
       id="blend-pool-v1-node-type:UserReserveKey"
       class="diagram-node diagram-node--type"
@@ -780,7 +780,7 @@
       UserReserveKey
     </text>
   </a>
-  <a href="#type-AuctionKey" data-node-id="type:AuctionKey">
+  <a id="diagram-type-AuctionKey" href="#type-AuctionKey" data-node-id="type:AuctionKey">
     <rect
       id="blend-pool-v1-node-type:AuctionKey"
       class="diagram-node diagram-node--type"
@@ -801,7 +801,7 @@
       AuctionKey
     </text>
   </a>
-  <a href="#type-PoolDataKey" data-node-id="type:PoolDataKey">
+  <a id="diagram-type-PoolDataKey" href="#type-PoolDataKey" data-node-id="type:PoolDataKey">
     <rect
       id="blend-pool-v1-node-type:PoolDataKey"
       class="diagram-node diagram-node--type"
@@ -822,7 +822,7 @@
       PoolDataKey
     </text>
   </a>
-  <a href="#type-PriceData" data-node-id="type:PriceData">
+  <a id="diagram-type-PriceData" href="#type-PriceData" data-node-id="type:PriceData">
     <rect
       id="blend-pool-v1-node-type:PriceData"
       class="diagram-node diagram-node--type"
@@ -843,7 +843,7 @@
       PriceData
     </text>
   </a>
-  <a href="#type-Asset" data-node-id="type:Asset">
+  <a id="diagram-type-Asset" href="#type-Asset" data-node-id="type:Asset">
     <rect
       id="blend-pool-v1-node-type:Asset"
       class="diagram-node diagram-node--type"

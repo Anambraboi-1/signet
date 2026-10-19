@@ -5,10 +5,13 @@ import { ExportPngButton } from './export-png-button';
 /** Diagram tab (#445): mounts the `ContractDiagram` slot (#450). */
 export default async function DiagramPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ handle: string; address: string }>;
+  searchParams?: Promise<{ focus?: string }>;
 }) {
   const { handle, address } = await params;
+  const { focus } = (await searchParams) ?? {};
   const props = await loadSlotProps(handle, address);
   if (!props) return null;
   return (
@@ -28,7 +31,7 @@ export default async function DiagramPage({
         )}
         <EmbedButton handle={handle} address={address} />
       </div>
-      <ContractDiagram {...props} />
+      <ContractDiagram {...props} focus={focus} />
     </>
   );
 }

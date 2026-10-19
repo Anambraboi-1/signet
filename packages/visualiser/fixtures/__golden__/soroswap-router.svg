@@ -12,7 +12,7 @@
       <path d="M0,0 L10,3.5 L0,7 Z" class="diagram-edge-marker" />
     </marker>
   </defs>
-  <a href="#fn-add_liquidity" data-node-id="fn:add_liquidity">
+  <a id="diagram-fn-add_liquidity" href="#fn-add_liquidity" data-node-id="fn:add_liquidity">
     <rect
       id="soroswap-router-node-fn:add_liquidity"
       class="diagram-node diagram-node--function"
@@ -33,7 +33,7 @@
       add_liquidity
     </text>
   </a>
-  <a href="#fn-remove_liquidity" data-node-id="fn:remove_liquidity">
+  <a id="diagram-fn-remove_liquidity" href="#fn-remove_liquidity" data-node-id="fn:remove_liquidity">
     <rect
       id="soroswap-router-node-fn:remove_liquidity"
       class="diagram-node diagram-node--function"
@@ -54,7 +54,7 @@
       remove_liquidity
     </text>
   </a>
-  <a href="#fn-swap_exact_tokens_for_tokens" data-node-id="fn:swap_exact_tokens_for_tokens">
+  <a id="diagram-fn-swap_exact_tokens_for_tokens" href="#fn-swap_exact_tokens_for_tokens" data-node-id="fn:swap_exact_tokens_for_tokens">
     <rect
       id="soroswap-router-node-fn:swap_exact_tokens_for_tokens"
       class="diagram-node diagram-node--function"
@@ -75,7 +75,7 @@
       swap_exact_tokens_for_tok…
     </text>
   </a>
-  <a href="#fn-swap_tokens_for_exact_tokens" data-node-id="fn:swap_tokens_for_exact_tokens">
+  <a id="diagram-fn-swap_tokens_for_exact_tokens" href="#fn-swap_tokens_for_exact_tokens" data-node-id="fn:swap_tokens_for_exact_tokens">
     <rect
       id="soroswap-router-node-fn:swap_tokens_for_exact_tokens"
       class="diagram-node diagram-node--function"
@@ -96,7 +96,7 @@
       swap_tokens_for_exact_tok…
     </text>
   </a>
-  <a href="#fn-sort_tokens" data-node-id="fn:sort_tokens">
+  <a id="diagram-fn-sort_tokens" href="#fn-sort_tokens" data-node-id="fn:sort_tokens">
     <rect
       id="soroswap-router-node-fn:sort_tokens"
       class="diagram-node diagram-node--function"
@@ -117,7 +117,7 @@
       sort_tokens
     </text>
   </a>
-  <a href="#fn-pair_for" data-node-id="fn:pair_for">
+  <a id="diagram-fn-pair_for" href="#fn-pair_for" data-node-id="fn:pair_for">
     <rect
       id="soroswap-router-node-fn:pair_for"
       class="diagram-node diagram-node--function"
@@ -138,7 +138,7 @@
       pair_for
     </text>
   </a>
-  <a href="#fn-quote" data-node-id="fn:quote">
+  <a id="diagram-fn-quote" href="#fn-quote" data-node-id="fn:quote">
     <rect
       id="soroswap-router-node-fn:quote"
       class="diagram-node diagram-node--function"
@@ -159,7 +159,7 @@
       quote
     </text>
   </a>
-  <a href="#fn-get_factory" data-node-id="fn:get_factory">
+  <a id="diagram-fn-get_factory" href="#fn-get_factory" data-node-id="fn:get_factory">
     <rect
       id="soroswap-router-node-fn:get_factory"
       class="diagram-node diagram-node--function"
@@ -180,7 +180,7 @@
       get_factory
     </text>
   </a>
-  <a href="#fn-get_reserves" data-node-id="fn:get_reserves">
+  <a id="diagram-fn-get_reserves" href="#fn-get_reserves" data-node-id="fn:get_reserves">
     <rect
       id="soroswap-router-node-fn:get_reserves"
       class="diagram-node diagram-node--function"
@@ -201,7 +201,7 @@
       get_reserves
     </text>
   </a>
-  <a href="#fn-get_amount_out" data-node-id="fn:get_amount_out">
+  <a id="diagram-fn-get_amount_out" href="#fn-get_amount_out" data-node-id="fn:get_amount_out">
     <rect
       id="soroswap-router-node-fn:get_amount_out"
       class="diagram-node diagram-node--function"
@@ -222,7 +222,7 @@
       get_amount_out
     </text>
   </a>
-  <a href="#fn-get_amount_in" data-node-id="fn:get_amount_in">
+  <a id="diagram-fn-get_amount_in" href="#fn-get_amount_in" data-node-id="fn:get_amount_in">
     <rect
       id="soroswap-router-node-fn:get_amount_in"
       class="diagram-node diagram-node--function"
@@ -243,7 +243,7 @@
       get_amount_in
     </text>
   </a>
-  <a href="#fn-get_amounts_out" data-node-id="fn:get_amounts_out">
+  <a id="diagram-fn-get_amounts_out" href="#fn-get_amounts_out" data-node-id="fn:get_amounts_out">
     <rect
       id="soroswap-router-node-fn:get_amounts_out"
       class="diagram-node diagram-node--function"
@@ -264,7 +264,7 @@
       get_amounts_out
     </text>
   </a>
-  <a href="#fn-get_amounts_in" data-node-id="fn:get_amounts_in">
+  <a id="diagram-fn-get_amounts_in" href="#fn-get_amounts_in" data-node-id="fn:get_amounts_in">
     <rect
       id="soroswap-router-node-fn:get_amounts_in"
       class="diagram-node diagram-node--function"
@@ -285,7 +285,7 @@
       get_amounts_in
     </text>
   </a>
-  <a href="#fn-router_pair_for" data-node-id="fn:router_pair_for">
+  <a id="diagram-fn-router_pair_for" href="#fn-router_pair_for" data-node-id="fn:router_pair_for">
     <rect
       id="soroswap-router-node-fn:router_pair_for"
       class="diagram-node diagram-node--function"
@@ -306,7 +306,7 @@
       router_pair_for
     </text>
   </a>
-  <a href="#fn-router_quote" data-node-id="fn:router_quote">
+  <a id="diagram-fn-router_quote" href="#fn-router_quote" data-node-id="fn:router_quote">
     <rect
       id="soroswap-router-node-fn:router_quote"
       class="diagram-node diagram-node--function"
@@ -327,7 +327,7 @@
       router_quote
     </text>
   </a>
-  <a href="#fn-router_get_amount_out" data-node-id="fn:router_get_amount_out">
+  <a id="diagram-fn-router_get_amount_out" href="#fn-router_get_amount_out" data-node-id="fn:router_get_amount_out">
     <rect
       id="soroswap-router-node-fn:router_get_amount_out"
       class="diagram-node diagram-node--function"
@@ -348,7 +348,7 @@
       router_get_amount_out
     </text>
   </a>
-  <a href="#fn-router_get_amount_in" data-node-id="fn:router_get_amount_in">
+  <a id="diagram-fn-router_get_amount_in" href="#fn-router_get_amount_in" data-node-id="fn:router_get_amount_in">
     <rect
       id="soroswap-router-node-fn:router_get_amount_in"
       class="diagram-node diagram-node--function"
@@ -369,7 +369,7 @@
       router_get_amount_in
     </text>
   </a>
-  <a href="#fn-router_get_amounts_out" data-node-id="fn:router_get_amounts_out">
+  <a id="diagram-fn-router_get_amounts_out" href="#fn-router_get_amounts_out" data-node-id="fn:router_get_amounts_out">
     <rect
       id="soroswap-router-node-fn:router_get_amounts_out"
       class="diagram-node diagram-node--function"
@@ -390,7 +390,7 @@
       router_get_amounts_out
     </text>
   </a>
-  <a href="#fn-router_get_amounts_in" data-node-id="fn:router_get_amounts_in">
+  <a id="diagram-fn-router_get_amounts_in" href="#fn-router_get_amounts_in" data-node-id="fn:router_get_amounts_in">
     <rect
       id="soroswap-router-node-fn:router_get_amounts_in"
       class="diagram-node diagram-node--function"
@@ -411,7 +411,7 @@
       router_get_amounts_in
     </text>
   </a>
-  <a href="#fn-initialize" data-node-id="fn:initialize">
+  <a id="diagram-fn-initialize" href="#fn-initialize" data-node-id="fn:initialize">
     <rect
       id="soroswap-router-node-fn:initialize"
       class="diagram-node diagram-node--function"

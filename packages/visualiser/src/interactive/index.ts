@@ -56,6 +56,13 @@ export {
 } from './png.ts';
 export { IBM_PLEX_MONO_BASE64 } from './font.ts';
 
+export type { PermalinkOptions } from './permalink.ts';
+export {
+  attachPermalinkButton,
+  buildNodePermalink,
+  enhancePermalinks,
+} from './permalink.ts';
+
 /**
  * Placeholder for the pan/zoom/selection enhancer that lands in #501–#505.
  * Kept so the package's `./interactive` entry has a stable surface while that

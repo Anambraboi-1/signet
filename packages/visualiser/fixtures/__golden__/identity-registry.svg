@@ -12,7 +12,7 @@
       <path d="M0,0 L10,3.5 L0,7 Z" class="diagram-edge-marker" />
     </marker>
   </defs>
-  <a href="#fn-claim" data-node-id="fn:claim">
+  <a id="diagram-fn-claim" href="#fn-claim" data-node-id="fn:claim">
     <rect
       id="identity-registry-node-fn:claim"
       class="diagram-node diagram-node--function"
@@ -33,7 +33,7 @@
       claim
     </text>
   </a>
-  <a href="#fn-count" data-node-id="fn:count">
+  <a id="diagram-fn-count" href="#fn-count" data-node-id="fn:count">
     <rect
       id="identity-registry-node-fn:count"
       class="diagram-node diagram-node--function"
@@ -54,7 +54,7 @@
       count
     </text>
   </a>
-  <a href="#fn-lookup" data-node-id="fn:lookup">
+  <a id="diagram-fn-lookup" href="#fn-lookup" data-node-id="fn:lookup">
     <rect
       id="identity-registry-node-fn:lookup"
       class="diagram-node diagram-node--function"
@@ -75,7 +75,7 @@
       lookup
     </text>
   </a>
-  <a href="#fn-release" data-node-id="fn:release">
+  <a id="diagram-fn-release" href="#fn-release" data-node-id="fn:release">
     <rect
       id="identity-registry-node-fn:release"
       class="diagram-node diagram-node--function"
@@ -96,7 +96,7 @@
       release
     </text>
   </a>
-  <a href="#fn-resolve" data-node-id="fn:resolve">
+  <a id="diagram-fn-resolve" href="#fn-resolve" data-node-id="fn:resolve">
     <rect
       id="identity-registry-node-fn:resolve"
       class="diagram-node diagram-node--function"
@@ -117,7 +117,7 @@
       resolve
     </text>
   </a>
-  <a href="#fn-is_bound" data-node-id="fn:is_bound">
+  <a id="diagram-fn-is_bound" href="#fn-is_bound" data-node-id="fn:is_bound">
     <rect
       id="identity-registry-node-fn:is_bound"
       class="diagram-node diagram-node--function"
@@ -138,7 +138,7 @@
       is_bound
     </text>
   </a>
-  <a href="#fn-admin_revoke" data-node-id="fn:admin_revoke">
+  <a id="diagram-fn-admin_revoke" href="#fn-admin_revoke" data-node-id="fn:admin_revoke">
     <rect
       id="identity-registry-node-fn:admin_revoke"
       class="diagram-node diagram-node--function"
@@ -159,7 +159,7 @@
       admin_revoke
     </text>
   </a>
-  <a href="#fn-initialize" data-node-id="fn:initialize">
+  <a id="diagram-fn-initialize" href="#fn-initialize" data-node-id="fn:initialize">
     <rect
       id="identity-registry-node-fn:initialize"
       class="diagram-node diagram-node--function"

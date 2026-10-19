@@ -63,6 +63,7 @@ function DiagramBody(props: ContractSlotProps) {
     <details
       id="diagram-outline"
       className="mt-8 border border-[#1f1d19] p-4 text-[13px] text-[#8a8779]"
+      open={props.focus ? true : undefined}
     >
       <summary className="cursor-pointer font-medium text-[#f5f4ee] hover:text-[#e05a4b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e05a4b]">
         Diagram as text
@@ -107,6 +108,7 @@ function DiagramBody(props: ContractSlotProps) {
     hrefForNode,
     title: `${props.handle} (${props.address})`,
     ariaDescribedBy: 'diagram-outline',
+    focus: props.focus,
   });
 
   return (
