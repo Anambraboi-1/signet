@@ -62,7 +62,14 @@ export function CopyAddress({
       type="button"
       onClick={handleCopy}
       title={address}
-      aria-label={copied ? copiedLabel : `Copy ${label} ${address}`}
+      // The name must contain the visible text (WCAG 2.5.3 label-in-name), which
+      // is `display` — a truncation of the address in some places. Lead with the
+      // full address, then the visible text when it differs.
+      aria-label={
+        copied
+          ? copiedLabel
+          : `Copy ${label} ${address}${display && display !== address ? ` ${display}` : ''}`
+      }
       className={`group inline-flex min-h-11 min-w-11 items-center gap-2 text-left ${
         hasText ? '' : 'justify-center'
       }`}
