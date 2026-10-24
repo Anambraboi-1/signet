@@ -127,13 +127,21 @@ test.describe('database-backed route accessibility @db', () => {
     });
     try {
       await apiSignIn(page, owner);
-      for (const path of ['/app', '/app/profile', '/app/wallets', '/app/settings']) {
+      for (const path of ['/app', '/app/profile', '/app/wallets', '/app/api-keys', '/app/settings']) {
         await page.goto(path);
         await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
         if (path === '/app/profile') {
           await expect(page.getByRole('textbox', { name: 'Display name' })).toBeVisible({
             timeout: 30_000,
           });
+        }
+        if (path === '/app/api-keys') {
+          // The real list query, against the database: the form only renders
+          // for a wallet with a profile row, and the list once it has loaded.
+          await expect(page.getByRole('textbox', { name: 'Key name' })).toBeVisible({
+            timeout: 30_000,
+          });
+          await expect(page.getByText('No active keys.')).toBeVisible();
         }
         if (path === '/app/wallets') {
           await expect(page.getByText('○ curated', { exact: true })).toBeVisible();

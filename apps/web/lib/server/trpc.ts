@@ -11,6 +11,13 @@ import { rateLimit } from '../rate-limit.ts';
 import { verifySession, SESSION_COOKIE } from '../auth.ts';
 import { clientIp, isSameOriginHeaders } from '../security.ts';
 import { getAccount, unlinkWallet, updateAccount, normalizeAccountUpdate } from './account.ts';
+import {
+  apiKeyIdInput,
+  createAccountApiKey,
+  listAccountApiKeys,
+  normalizeApiKeyName,
+  revokeAccountApiKey,
+} from './account-api-keys.ts';
 import { boundCount, lookupWallet, resolveHandle } from './registry-read.ts';
 import { STELLAR_ADDR_RE } from '../stellar-address.ts';
 
@@ -151,6 +158,18 @@ const accountRouter = router({
   unlinkWallet: protectedProcedure
     .input(walletInput)
     .mutation(({ ctx, input }) => unlinkWallet(ctx.address, input.wallet)),
+
+  // API keys for the signed-in profile (#652). The full key is returned once,
+  // by `create`; `list` only ever carries its prefix.
+  apiKeys: router({
+    list: protectedProcedure.query(({ ctx }) => listAccountApiKeys(ctx.address)),
+    create: protectedProcedure
+      .input(normalizeApiKeyName)
+      .mutation(({ ctx, input }) => createAccountApiKey(ctx.address, input.name)),
+    revoke: protectedProcedure
+      .input(apiKeyIdInput)
+      .mutation(({ ctx, input }) => revokeAccountApiKey(ctx.address, input.id)),
+  }),
 });
 
 /**
